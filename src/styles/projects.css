@@ -1,0 +1,134 @@
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.project-card {
+  border-radius: 26px;
+  overflow: hidden;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(26, 18, 8, 0.1);
+  border-color: rgba(212, 105, 122, 0.6);
+}
+
+.project-thumb {
+  min-height: 220px;
+  padding: 22px;
+  background:
+    linear-gradient(180deg, rgba(26, 18, 8, 0.08), rgba(26, 18, 8, 0.02)),
+    linear-gradient(145deg, rgba(212, 105, 122, 0.12), rgba(255, 255, 255, 0.55));
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.project-thumb::after {
+  content: '';
+  position: absolute;
+  inset: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 18px;
+}
+
+.project-thumb.platform {
+  background-image:
+    radial-gradient(circle at 78% 26%, rgba(255, 255, 255, 0.32), transparent 28%),
+    linear-gradient(180deg, rgba(26, 18, 8, 0.06), rgba(26, 18, 8, 0.02)),
+    linear-gradient(145deg, rgba(212, 105, 122, 0.12), rgba(255, 255, 255, 0.54));
+}
+
+.project-thumb.agentic {
+  background-image:
+    radial-gradient(circle at 20% 24%, rgba(255, 255, 255, 0.28), transparent 28%),
+    linear-gradient(180deg, rgba(26, 18, 8, 0.06), rgba(26, 18, 8, 0.02)),
+    linear-gradient(145deg, rgba(212, 105, 122, 0.16), rgba(255, 255, 255, 0.52));
+}
+
+.project-thumb.soon {
+  background-image:
+    linear-gradient(180deg, rgba(26, 18, 8, 0.05), rgba(26, 18, 8, 0.02)),
+    linear-gradient(145deg, rgba(226, 213, 200, 0.8), rgba(255, 255, 255, 0.56));
+}
+
+.project-thumb-text,
+.project-thumb-badge {
+  position: relative;
+  z-index: 1;
+}
+
+.project-thumb-text {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1.75rem;
+  color: var(--ink);
+  max-width: 10ch;
+  line-height: 1.05;
+}
+
+.project-thumb-badge {
+  align-self: flex-start;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(253, 250, 245, 0.84);
+  border: 1px solid rgba(226, 213, 200, 0.9);
+  color: var(--ink2);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.project-body {
+  padding: 24px;
+  display: grid;
+  gap: 14px;
+  flex: 1;
+}
+
+.project-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1.45rem;
+  line-height: 1.15;
+  margin: 0;
+  color: var(--ink);
+}
+
+.project-desc {
+  color: var(--ink2);
+}
+
+.project-link {
+  margin-top: auto;
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 700;
+  position: relative;
+  width: fit-content;
+  background: transparent;
+  padding: 0;
+  text-align: left;
+}
+
+.project-link:hover,
+.project-link:focus-visible {
+  color: var(--ink);
+}
+
+@media (max-width: 1080px) {
+  .project-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .project-thumb {
+    min-height: 200px;
+  }
+}

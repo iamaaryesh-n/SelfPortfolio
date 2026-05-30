@@ -1,0 +1,380 @@
+.hero {
+  min-height: calc(100vh - var(--header-h) - 210px);
+  display: flex;
+  align-items: center;
+  padding-top: 0;
+  position: relative;
+  /* allow artwork to show fully when it extends slightly beyond the main container */
+  overflow: visible;
+}
+
+.hero::before {
+  content: '桜';
+  position: absolute;
+  right: 2%;
+  bottom: 5%;
+  font-family: 'Shippori Mincho', serif;
+  font-size: clamp(12rem, 24vw, 24rem);
+  line-height: 1;
+  color: rgba(26, 18, 8, 0.035);
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 76% 34%, rgba(212, 105, 122, 0.045), transparent 18%),
+    radial-gradient(circle at 21% 18%, rgba(212, 105, 122, 0.04), transparent 14%);
+  pointer-events: none;
+}
+
+.hero-grid {
+  display: grid;
+  /* slightly increase image column so the container has room without resizing the artwork */
+  grid-template-columns: 1fr 1.6fr;
+  gap: 36px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  padding-left: 18px;
+  position: relative;
+}
+
+.eyebrow::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 2px;
+  background: rgba(212,105,122,0.18);
+  border-radius: 2px;
+}
+
+.hero-copy {
+  max-width: 720px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(212, 105, 122, 0.08);
+  border: 1px solid rgba(212, 105, 122, 0.18);
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.hero-badge-icon {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.hero-title {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  line-height: 1.04;
+  margin: 0 0 12px;
+  color: var(--ink);
+}
+
+.hero-title .hero-intro {
+  display: block;
+  /* match the name styling so both lines look identical */
+  font-family: 'Shippori Mincho', serif;
+  font-size: clamp(1.6rem, 3.2vw, 2.6rem);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.hero-title .hero-name {
+  display: block;
+  font-size: clamp(1.6rem, 3.2vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.02;
+  color: var(--ink);
+}
+
+.hero-subtitle {
+  font-size: clamp(1.12rem, 2.0vw, 1.32rem);
+  color: var(--muted);
+  max-width: 46ch;
+  min-height: 2.4em;
+  margin-bottom: 22px;
+}
+
+.hero-desc {
+  margin-top: 8px;
+  margin-bottom: 28px; /* space before buttons */
+  max-width: 46ch;
+  color: var(--ink2);
+}
+
+.typing-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.12em;
+  background: var(--sakura-accent);
+  transform: translateY(3px);
+  margin-left: 8px;
+  opacity: 0.95;
+  animation: blink-caret 1s steps(1) infinite;
+}
+
+@keyframes blink-caret {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px; /* space after buttons */
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: #fff;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.01em;
+  transition: transform 0.18s ease, background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  box-shadow: 0 6px 14px rgba(26, 18, 8, 0.08);
+}
+
+.cta-row .btn {
+  padding: 6px 12px;
+  border-radius: 18px;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  background: var(--sakura-accent);
+  border-color: var(--sakura-accent);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(212, 105, 122, 0.18);
+}
+
+.btn.secondary {
+  background: transparent;
+  color: var(--ink);
+  box-shadow: none;
+  border-color: var(--border);
+}
+
+.btn.secondary {
+  background: rgba(212,105,122,0.04);
+  border: 1px solid rgba(212,105,122,0.12);
+}
+
+.btn.secondary:hover,
+.btn.secondary:focus-visible {
+  border-color: var(--sakura-accent);
+  background: rgba(212, 105, 122, 0.08);
+  color: var(--ink);
+}
+
+.portrait-panel {
+  position: relative;
+  padding: 0;
+  border-radius: 28px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.portrait-frame {
+  /* balanced container: reduce slightly so image isn't too dominant */
+  min-height: 620px; /* reduced to fit viewport better */
+  border-radius: 0;
+  border: 0;
+  background: transparent;
+  position: relative;
+  overflow: visible;
+  display: flex;
+  align-items: flex-end; /* align to bottom so desk/laptop sit on baseline */
+  justify-content: center;
+  padding: 0;
+}
+
+.portrait-image {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  /* cap image size so it fits comfortably into the container */
+  max-width: 115%;
+  max-height: calc(100vh - 160px);
+  height: auto;
+  object-fit: contain; /* avoid cropping important parts */
+  object-position: 65% 86%; /* slight focal recentering */
+  display: block;
+  transform: translateX(+5%) translateY(-18%);
+  mix-blend-mode: normal;
+  filter: drop-shadow(0 22px 44px rgba(26,18,8,0.10));
+}
+
+.portrait-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.hero-watermark {
+  position: absolute;
+  inset: auto auto 10% 8%;
+  width: 240px;
+  height: 240px;
+  opacity: 0.1;
+  pointer-events: none;
+  filter: saturate(0.4);
+}
+
+.hero-watermark svg {
+  width: 100%;
+  height: 100%;
+}
+
+.content-shell {
+  position: relative;
+  padding: 0;
+  display: flex;
+  flex: 1 0 auto;
+}
+
+.content-panel {
+  position: relative;
+  z-index: 1;
+  animation: panelFade 0.5s ease;
+}
+
+.content-panel.panel-home {
+  min-height: calc(100vh - var(--header-h) - 210px);
+  display: grid;
+  align-items: center;
+}
+
+.content-panel.panel-detail {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.content-shell > .container {
+  width: min(calc(100% - 40px), var(--max-width));
+}
+
+.content-watermark {
+  position: absolute;
+  inset: auto 7% 6% auto;
+  width: 210px;
+  height: 210px;
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.content-watermark svg {
+  width: 100%;
+  height: 100%;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.stat-card {
+  padding: 18px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(226, 213, 200, 0.9);
+  box-shadow: 0 12px 30px rgba(26, 18, 8, 0.05);
+}
+
+.stat-number {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1.55rem;
+  line-height: 1;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+/* Duplicate/old portrait-frame definitions removed to keep a single source of truth.
+   The active .portrait-frame is defined earlier in this file and uses overflow: visible
+   so artworks are not clipped. */
+
+@media (max-width: 767px) {
+  .section {
+    padding: 64px 0;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 14vw, 3.8rem);
+  }
+
+
+  .portrait-frame {
+    min-height: 420px; /* scale down for medium screens */
+  }
+  .portrait-image {
+    transform: none;
+    object-position: center bottom;
+    max-width: 100%;
+    max-height: calc(100vh - 240px);
+  }
+  .icon-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .portrait-frame {
+    min-height: 320px;
+  }
+
+  .portrait-meta,
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .content-shell {
+    padding-top: 18px;
+  }
+
+  .content-panel.panel-home {
+    min-height: auto;
+  }
+
+  .project-thumb {
+    min-height: 200px;
+  }
+}
