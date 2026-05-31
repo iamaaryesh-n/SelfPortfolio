@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import Loader from './components/Loader';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -55,6 +56,8 @@ function useTypewriter(text, enabled) {
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [headerScrolled, setHeaderScrolled] = useState(false);
+  const [showLoader, setShowLoader] = useState(true);
+  const handleLoaderDone = useCallback(() => setShowLoader(false), []);
   const getInitialSection = () => {
     try {
       const hash = window.location.hash.replace('#', '');
@@ -67,6 +70,17 @@ function App() {
 
   const [activeSection, setActiveSection] = useState(getInitialSection);
   const cursorRef = useRef(null);
+  const contentShellRef = useRef(null);
+  const edgeScrollRef = useRef({
+    edgeScrollCount: 0,
+    isInScrollSession: false,
+    sessionTimer: null,
+    resetTimer: null,
+    navCooldownTimer: null,
+    isNavigating: false,
+    pendingScrollDirection: null,
+    lastEdgeDirection: null,
+  });
   const typedSubtitle = useTypewriter(subtitleText, activeSection === 'home');
 
   useEffect(() => {
@@ -75,6 +89,171 @@ function App() {
     onScroll();
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  useEffect(() => {
+    const container = contentShellRef.current;
+    if (!container) return undefined;
+
+    const state = edgeScrollRef.current;
+
+    const clearEdgeScrollState = () => {
+      state.edgeScrollCount = 0;
+      state.isInScrollSession = false;
+      state.lastEdgeDirection = null;
+      if (state.sessionTimer) {
+        window.clearTimeout(state.sessionTimer);
+        state.sessionTimer = null;
+      }
+      if (state.resetTimer) {
+        window.clearTimeout(state.resetTimer);
+        state.resetTimer = null;
+      }
+    };
+
+    const clearNavigationCooldown = () => {
+      state.isNavigating = false;
+      if (state.navCooldownTimer) {
+        window.clearTimeout(state.navCooldownTimer);
+        state.navCooldownTimer = null;
+      }
+    };
+
+    const isInsideLeafletMap = (target) => {
+      if (!(target instanceof Element)) return false;
+      return Boolean(target.closest('#leaflet-map'));
+    };
+
+    const getNextSection = (direction) => {
+      const currentIndex = sections.findIndex((section) => section.id === activeSection);
+      if (currentIndex < 0) return null;
+
+      const nextIndex = direction === 'down' ? currentIndex + 1 : currentIndex - 1;
+      if (nextIndex < 0 || nextIndex >= sections.length) return null;
+
+      return sections[nextIndex]?.id ?? null;
+    };
+
+    const triggerNavigation = (direction) => {
+      state.edgeScrollCount = 0;
+      state.isInScrollSession = false;
+      state.lastEdgeDirection = null;
+      if (state.sessionTimer) {
+        window.clearTimeout(state.sessionTimer);
+        state.sessionTimer = null;
+      }
+      if (state.resetTimer) {
+        window.clearTimeout(state.resetTimer);
+        state.resetTimer = null;
+      }
+
+      state.isNavigating = true;
+      if (state.navCooldownTimer) {
+        window.clearTimeout(state.navCooldownTimer);
+      }
+      state.navCooldownTimer = window.setTimeout(() => {
+        state.isNavigating = false;
+        state.navCooldownTimer = null;
+      }, 1000);
+
+      const targetSection = getNextSection(direction);
+      if (targetSection) {
+        state.pendingScrollDirection = direction === 'down' ? 'top' : 'bottom';
+        openSection(targetSection);
+      }
+    };
+
+    const resetIfAwayFromEdge = () => {
+      const atTop = container.scrollTop <= 1;
+      const atBottom = container.scrollTop + container.clientHeight >= container.scrollHeight - 1;
+      if (!atTop && !atBottom) {
+        clearEdgeScrollState();
+      }
+    };
+
+    const onWheel = (event) => {
+      if (state.isNavigating) {
+        event.preventDefault();
+        return;
+      }
+
+      if (isInsideLeafletMap(event.target)) return;
+
+      const deltaMagnitude = Math.abs(event.deltaY);
+      if (deltaMagnitude < 12) return;
+
+      const direction = event.deltaY > 0 ? 'down' : event.deltaY < 0 ? 'up' : null;
+      if (!direction) return;
+
+      const atTop = container.scrollTop <= 1;
+      const atBottom = container.scrollTop + container.clientHeight >= container.scrollHeight - 1;
+      const atEdge = (direction === 'down' && atBottom) || (direction === 'up' && atTop);
+
+      if (!atEdge) {
+        clearEdgeScrollState();
+        return;
+      }
+
+      event.preventDefault();
+
+      if (!state.isInScrollSession) {
+        state.isInScrollSession = true;
+
+        if (state.lastEdgeDirection !== direction) {
+          state.edgeScrollCount = 0;
+          state.lastEdgeDirection = direction;
+        }
+
+        state.edgeScrollCount += 1;
+
+        if (state.resetTimer) {
+          window.clearTimeout(state.resetTimer);
+        }
+        state.resetTimer = window.setTimeout(() => {
+          clearEdgeScrollState();
+        }, 900);
+      }
+
+      if (state.sessionTimer) {
+        window.clearTimeout(state.sessionTimer);
+      }
+      state.sessionTimer = window.setTimeout(() => {
+        state.isInScrollSession = false;
+      }, 120);
+
+      if (state.edgeScrollCount >= 2) {
+        triggerNavigation(direction);
+      }
+    };
+
+    container.addEventListener('wheel', onWheel, { passive: false });
+    container.addEventListener('scroll', resetIfAwayFromEdge, { passive: true });
+
+    return () => {
+      container.removeEventListener('wheel', onWheel);
+      container.removeEventListener('scroll', resetIfAwayFromEdge);
+      clearEdgeScrollState();
+      clearNavigationCooldown();
+    };
+  }, [activeSection]);
+
+  useEffect(() => {
+    const shell = contentShellRef.current;
+    const state = edgeScrollRef.current;
+    if (!shell) return undefined;
+
+    const timer = window.requestAnimationFrame(() => {
+      if (state.pendingScrollDirection === 'top') {
+        shell.scrollTop = 0;
+      } else if (state.pendingScrollDirection === 'bottom') {
+        shell.scrollTop = shell.scrollHeight;
+      } else {
+        shell.scrollTop = 0;
+      }
+      state.pendingScrollDirection = null;
+    });
+
+    return () => window.cancelAnimationFrame(timer);
+  }, [activeSection]);
 
   // Apply staggered reveal animations to all elements inside the current
   // content panel when the active section changes — exclude the home
@@ -234,6 +413,7 @@ function App() {
 
   return (
     <div className="app-shell">
+      {showLoader && <Loader onDone={handleLoaderDone} />}
       <div className="custom-cursor" ref={cursorRef} aria-hidden="true" />
       <Navbar
         headerScrolled={headerScrolled}
@@ -245,7 +425,7 @@ function App() {
       />
 
       <main className="app-main">
-        <section className="content-shell" aria-label={`${activeSection} content`}>
+        <section ref={contentShellRef} className="content-shell" aria-label={`${activeSection} content`}>
           {/* Global decorative shapes (appear behind all pages) */}
           <div className="page-decor" aria-hidden="true">
             <span className="shape s1" />
