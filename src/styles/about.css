@@ -235,4 +235,24 @@
   .contact-panel {
     padding: 20px;
   }
+
+  .about-fact-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .about-interests ul {
+    grid-template-columns: 1fr;
+  }
+
+  .about-portrait,
+  .about-photo,
+  .about-photo-fallback {
+    min-height: 460px;
+    height: 460px;
+  }
+
+  .about-photo {
+    object-position: center top;
+  }
 }

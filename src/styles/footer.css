@@ -87,4 +87,12 @@
   .social-link {
     font-size: 0.84rem;
   }
+
+  .footer-social {
+    gap: 10px 14px;
+  }
+
+  .social-link span {
+    font-size: 0.8rem;
+  }
 }

@@ -347,26 +347,63 @@
     padding: 64px 0;
   }
 
-  .hero-title {
-    font-size: clamp(2.5rem, 14vw, 3.8rem);
-  }
-
-
-  .portrait-frame {
-    min-height: 420px; /* scale down for medium screens */
-  }
-  .portrait-image {
-    transform: none;
-    object-position: center bottom;
-    max-width: 100%;
-    max-height: calc(100vh - 240px);
-  }
-  .icon-grid {
+  .hero-grid {
     grid-template-columns: 1fr;
+    gap: 0;
+    text-align: center;
+  }
+
+  .hero-copy {
+    order: 2;
+    max-width: 100%;
+    padding-top: 16px;
+  }
+
+  .portrait-panel {
+    order: 1;
+    width: 100%;
   }
 
   .portrait-frame {
-    min-height: 320px;
+    min-height: 260px;
+    max-height: 300px;
+    justify-content: center;
+  }
+
+  .portrait-image {
+    max-height: 280px;
+    max-width: 85%;
+    transform: none;
+    object-position: center top;
+  }
+
+  .hero-badge {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-title {
+    font-size: clamp(1.9rem, 9vw, 2.6rem);
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-desc {
+    max-width: 100%;
+    font-size: 0.9rem;
+  }
+
+  .cta-row {
+    justify-content: center;
+  }
+
+  .content-shell {
+    max-height: calc(100dvh - var(--header-h) - 44px);
   }
 
   .portrait-meta,

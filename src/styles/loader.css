@@ -151,3 +151,17 @@
     transform: translateY(0);
   }
 }
+
+@media (max-width: 767px) {
+  .loader-name {
+    font-size: clamp(2rem, 11vw, 3rem);
+  }
+
+  .loader-petals {
+    overflow: hidden;
+  }
+
+  .loader-eyebrow {
+    font-size: 0.65rem;
+  }
+}

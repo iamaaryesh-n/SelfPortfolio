@@ -345,6 +345,10 @@
 }
 
 @media (max-width: 767px) {
+  .contact-section-title h2 {
+    font-size: clamp(1.6rem, 7vw, 2rem);
+  }
+
   .contact-section-title {
     margin-bottom: 20px;
   }
@@ -364,6 +368,15 @@
 
   .contact-leaflet-map,
   .contact-map .leaflet-container {
-    height: 170px;
+    height: 200px;
+  }
+
+  .contact-icon svg {
+    width: 34px;
+    height: 34px;
+  }
+
+  .contact-value {
+    font-size: 0.85rem;
   }
 }

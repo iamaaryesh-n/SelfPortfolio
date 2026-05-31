@@ -423,6 +423,46 @@
   }
 }
 
+@media (max-width: 767px) {
+  .resume-summary {
+    padding: 18px 16px;
+    gap: 14px;
+  }
+
+  .resume-summary-body h3 {
+    font-size: 1.1rem;
+  }
+
+  .resume-summary-meta {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .tl-card {
+    padding: 14px 16px;
+  }
+
+  .tl-card h4 {
+    font-size: 0.9rem;
+  }
+
+  .skill-card {
+    padding: 14px 16px;
+  }
+
+  .cert-item {
+    padding: 12px 16px;
+  }
+
+  .resume-col-title {
+    font-size: 1.1rem;
+  }
+
+  .resume-grid {
+    gap: 28px;
+  }
+}
+
 @media (max-width: 540px) {
   .skills-grid {
     grid-template-columns: 1fr;

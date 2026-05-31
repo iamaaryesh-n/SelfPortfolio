@@ -49,6 +49,7 @@
   white-space: nowrap;
   width: clamp(4.5rem, 18vw, 16.5rem);
   flex: none;
+  overflow: visible;
 }
 
 .brand-slot {
@@ -56,7 +57,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: flex-start;
-  width: 100%;
+  width: max-content;
   min-height: 1.2em;
 }
 
@@ -89,6 +90,7 @@
   width: max-content;
   min-width: max-content;
   overflow: visible;
+  white-space: nowrap;
 }
 
 .brand.is-expanded .logo-compact {
@@ -102,7 +104,8 @@
 }
 
 .brand.is-expanded {
-  width: clamp(10rem, 24vw, 19rem);
+  width: max-content;
+  min-width: 18rem;
 }
 
 .nav-links {
@@ -239,10 +242,6 @@
     width: clamp(4.5rem, 22vw, 10rem);
   }
 
-  .logo-expanded {
-    display: none;
-  }
-
   .brand.is-expanded {
     width: clamp(4.5rem, 22vw, 10rem);
   }
@@ -253,8 +252,18 @@
     --header-h: 68px;
   }
 
+  .site-header {
+    align-items: flex-start;
+    height: auto;
+    min-height: var(--header-h);
+  }
+
   .site-header .container {
     padding-inline: 24px;
+  }
+
+  .nav-inner {
+    padding-top: 12px;
   }
 
   .nav-links {
@@ -269,11 +278,36 @@
     width: auto;
   }
 
+  .brand-slot {
+    min-height: 1.4em;
+  }
+
   .logo-expanded {
     display: none;
   }
 
   .logo {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+  }
+
+  .mobile-nav {
+    display: none;
+    width: 100%;
+    padding: 10px 24px 16px;
+    background: rgba(253, 250, 245, 0.94);
+    border-top: 1px solid rgba(226, 213, 200, 0.9);
+    box-shadow: 0 14px 30px rgba(26, 18, 8, 0.08);
+    position: relative;
+    z-index: 1001;
+  }
+
+  .mobile-nav-link {
+    font-size: 0.98rem;
+    padding: 16px 0;
+  }
+
+  .mobile-nav-link.is-active {
+    color: var(--sakura-accent);
+    font-weight: 700;
   }
 }
