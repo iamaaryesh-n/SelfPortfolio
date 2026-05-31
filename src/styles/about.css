@@ -248,8 +248,8 @@
   .about-portrait,
   .about-photo,
   .about-photo-fallback {
-    min-height: 460px;
-    height: 460px;
+    min-height: 540px;
+    height: 540px;
   }
 
   .about-photo {

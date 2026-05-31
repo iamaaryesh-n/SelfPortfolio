@@ -95,6 +95,14 @@ function App() {
     if (!container) return undefined;
 
     const state = edgeScrollRef.current;
+    const touchState = {
+      startX: 0,
+      startY: 0,
+      lastX: 0,
+      lastY: 0,
+      active: false,
+      tracking: false,
+    };
 
     const clearEdgeScrollState = () => {
       state.edgeScrollCount = 0;
@@ -121,6 +129,12 @@ function App() {
     const isInsideLeafletMap = (target) => {
       if (!(target instanceof Element)) return false;
       return Boolean(target.closest('#leaflet-map'));
+    };
+
+    const isTouchPointInsideLeafletMap = (touch) => {
+      if (!touch) return false;
+      const target = document.elementFromPoint(touch.clientX, touch.clientY);
+      return isInsideLeafletMap(target);
     };
 
     const getNextSection = (direction) => {
@@ -225,12 +239,88 @@ function App() {
       }
     };
 
+    const onTouchStart = (event) => {
+      if (event.touches.length !== 1) {
+        touchState.tracking = false;
+        touchState.active = false;
+        return;
+      }
+
+      const touch = event.touches[0];
+      if (isTouchPointInsideLeafletMap(touch)) {
+        touchState.tracking = false;
+        touchState.active = false;
+        return;
+      }
+
+      touchState.startX = touch.clientX;
+      touchState.startY = touch.clientY;
+      touchState.lastX = touch.clientX;
+      touchState.lastY = touch.clientY;
+      touchState.active = true;
+      touchState.tracking = true;
+    };
+
+    const onTouchMove = (event) => {
+      if (!touchState.tracking || event.touches.length !== 1) return;
+
+      const touch = event.touches[0];
+      const deltaX = touch.clientX - touchState.startX;
+      const deltaY = touch.clientY - touchState.startY;
+      const absX = Math.abs(deltaX);
+      const absY = Math.abs(deltaY);
+
+      if (absX > absY && absX > 18) {
+        touchState.tracking = false;
+        touchState.active = false;
+        return;
+      }
+
+      touchState.lastX = touch.clientX;
+      touchState.lastY = touch.clientY;
+    };
+
+    const onTouchEnd = () => {
+      if (!touchState.tracking || !touchState.active || state.isNavigating) {
+        touchState.tracking = false;
+        touchState.active = false;
+        return;
+      }
+
+      const deltaY = touchState.lastY - touchState.startY;
+      const deltaX = touchState.lastX - touchState.startX;
+      const absY = Math.abs(deltaY);
+      const absX = Math.abs(deltaX);
+
+      touchState.tracking = false;
+      touchState.active = false;
+
+      if (absY < 70 || absY < absX) return;
+
+      const direction = deltaY < 0 ? 'down' : 'up';
+      const atTop = container.scrollTop <= 1;
+      const atBottom = container.scrollTop + container.clientHeight >= container.scrollHeight - 1;
+      const atEdge = (direction === 'down' && atBottom) || (direction === 'up' && atTop);
+
+      if (atEdge) {
+        triggerNavigation(direction);
+      }
+    };
+
     container.addEventListener('wheel', onWheel, { passive: false });
     container.addEventListener('scroll', resetIfAwayFromEdge, { passive: true });
+    container.addEventListener('touchstart', onTouchStart, { passive: true });
+    container.addEventListener('touchmove', onTouchMove, { passive: true });
+    container.addEventListener('touchend', onTouchEnd, { passive: true });
+    container.addEventListener('touchcancel', onTouchEnd, { passive: true });
 
     return () => {
       container.removeEventListener('wheel', onWheel);
       container.removeEventListener('scroll', resetIfAwayFromEdge);
+      container.removeEventListener('touchstart', onTouchStart);
+      container.removeEventListener('touchmove', onTouchMove);
+      container.removeEventListener('touchend', onTouchEnd);
+      container.removeEventListener('touchcancel', onTouchEnd);
       clearEdgeScrollState();
       clearNavigationCooldown();
     };
