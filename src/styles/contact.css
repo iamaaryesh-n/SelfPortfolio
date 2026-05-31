@@ -1,44 +1,49 @@
+/* ─────────────────────────────────────────
+   CONTACT — sakura cream theme
+───────────────────────────────────────── */
+
 .contact-layout {
   display: grid;
-  grid-template-columns: minmax(0, 0.43fr) minmax(0, 0.57fr);
-  gap: 20px;
+  grid-template-columns: minmax(0, 0.44fr) minmax(0, 0.56fr);
+  gap: 18px;
   align-items: stretch;
-  max-width: 1120px;
+  max-width: 1040px;
   margin: 0 auto;
 }
 
 .contact-section-title {
   max-width: 760px;
-  margin: 0 auto 34px;
+  margin: 0 auto 26px;
   text-align: center;
 }
 
 .contact-section-title p {
-  margin-top: 8px;
+  margin-top: 6px;
   max-width: 72ch;
   color: var(--ink2);
-  font-size: 1.02rem;
+  font-size: 0.96rem;
   margin-left: auto;
   margin-right: auto;
 }
 
+/* ── INFO PANEL ── */
 .info-wrap {
   min-height: 100%;
   padding: 22px 22px 20px;
   background: rgba(255, 255, 255, 0.72);
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 .contact-stack {
   display: grid;
-  gap: 22px;
+  gap: 18px;
   margin-top: 0;
 }
 
 .info-item {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 14px;
+  gap: 12px;
   align-items: start;
   padding: 0;
   border: 0;
@@ -52,50 +57,76 @@
 }
 
 .contact-icon svg {
-  width: 46px;
-  height: 46px;
+  width: 40px;
+  height: 40px;
   stroke: var(--sakura-accent);
   background: rgba(212, 105, 122, 0.06);
   border-radius: 50%;
-  padding: 10px;
+  padding: 8px;
   flex: none;
-}
-
-.info-item:hover .contact-icon svg {
-  stroke: var(--ink);
 }
 
 .contact-content {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .contact-heading {
-  font-size: 1rem;
+  font-size: 0.96rem;
   font-weight: 700;
   color: var(--ink);
 }
 
 .contact-value {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: var(--ink2);
 }
 
+.contact-link {
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.contact-link:hover,
+.contact-link:focus-visible {
+  color: var(--sakura-accent);
+  text-decoration: underline;
+}
+
+/* ── MAP ── */
+.contact-map {
+  margin-top: 2px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(226, 213, 200, 0.78);
+  box-shadow: 0 12px 28px rgba(26, 18, 8, 0.06);
+  background: rgba(255, 255, 255, 0.84);
+}
+
+.contact-leaflet-map,
+.contact-map .leaflet-container {
+  display: block;
+  width: 100%;
+  height: 190px;
+}
+
+/* ── FORM PANEL ── */
 .contact-form-panel {
   min-height: 100%;
-  display: block;
-  padding-top: 22px;
+  display: flex;
+  align-items: flex-start;
+  padding: 22px 22px 16px;
 }
 
 .php-email-form {
   background: rgba(255, 255, 255, 0.72);
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 .contact-form {
   display: grid;
-  gap: 16px;
+  gap: 18px;
   margin-top: 0;
   width: 100%;
 }
@@ -103,12 +134,12 @@
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  gap: 18px 12px;
 }
 
 .field {
   display: grid;
-  gap: 8px;
+  gap: 4px;
 }
 
 .field.full {
@@ -116,10 +147,11 @@
 }
 
 .field label {
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.16em;
-  color: var(--muted);
+  color: var(--ink2);
+  font-weight: 700;
 }
 
 .field input,
@@ -128,78 +160,111 @@
   border: 1px solid rgba(61, 47, 30, 0.16);
   background: rgba(255, 255, 255, 0.96);
   color: var(--ink);
-  padding: 11px 12px;
+  padding: 8px 11px;
   outline: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
   border-radius: 0;
+  font-family: inherit;
+  font-size: 0.9rem;
 }
 
 .field input::placeholder,
 .field textarea::placeholder {
-  color: rgba(138, 112, 96, 0.7);
+  color: rgba(138, 112, 96, 0.55);
 }
 
 .field input:focus,
 .field textarea:focus {
   border-color: var(--sakura-accent);
-  box-shadow: 0 0 0 3px rgba(95, 210, 210, 0.12);
+  box-shadow: 0 0 0 3px rgba(212, 84, 122, 0.1);
 }
 
 .field textarea {
-  min-height: 120px;
+  min-height: 132px;
   resize: vertical;
 }
 
+/* ── FEEDBACK MESSAGES ── */
+.form-feedback {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.form-feedback svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.form-feedback--success {
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  color: #15803d;
+}
+
+.form-feedback--success svg {
+  stroke: #15803d;
+}
+
+.form-feedback--error {
+  background: rgba(239, 68, 68, 0.07);
+  border: 1px solid rgba(239, 68, 68, 0.22);
+  color: #b91c1c;
+}
+
+.form-feedback--error svg {
+  stroke: #b91c1c;
+}
+
+/* ── SUBMIT BUTTON ── */
 .submit-btn {
   justify-self: center;
-  min-width: 96px;
-  margin-top: 6px;
-  padding: 6px 12px;
-  font-size: 0.88rem;
-  height: 38px;
+  min-width: 130px;
+  margin-top: 2px;
+  padding: 9px 16px;
+  font-size: 0.9rem;
+  height: 40px;
   line-height: 1;
   border-radius: 24px;
   box-shadow: 0 4px 12px rgba(26, 18, 8, 0.08);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.2s, transform 0.15s;
 }
 
-.contact-map {
-  margin-top: 0;
-  border-radius: 4px;
-  overflow: hidden;
-  border: 1px solid rgba(226, 213, 200, 0.78);
-  box-shadow: 0 12px 28px rgba(26, 18, 8, 0.06);
-  background: rgba(255, 255, 255, 0.84);
+.submit-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none !important;
 }
 
-.contact-map iframe {
-  display: block;
-  width: 100%;
-  height: 240px;
-  border: 0;
-  filter: saturate(0.88) contrast(0.95);
+/* Loading spinner inside button */
+.btn-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
 }
 
-/* Leaflet map container (uses a div, not an iframe) */
-.contact-leaflet-map,
-.contact-map .leaflet-container {
-  display: block;
-  width: 100%;
-  height: 240px;
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
-@keyframes panelFade {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (max-width: 1080px) {
+/* ── RESPONSIVE ── */
+@media (max-width: 860px) {
   .contact-layout {
     grid-template-columns: 1fr;
   }
@@ -208,8 +273,9 @@
     max-width: 100%;
   }
 
-  .contact-map iframe {
-    height: 280px;
+  .contact-leaflet-map,
+  .contact-map .leaflet-container {
+    height: 180px;
   }
 }
 
@@ -218,7 +284,21 @@
     margin-bottom: 20px;
   }
 
-  .contact-map iframe {
-    height: 220px;
+  .info-wrap,
+  .contact-form-panel {
+    padding: 20px 18px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .submit-btn {
+    min-width: 124px;
+  }
+
+  .contact-leaflet-map,
+  .contact-map .leaflet-container {
+    height: 170px;
   }
 }

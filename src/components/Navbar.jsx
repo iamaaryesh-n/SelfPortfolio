@@ -1,10 +1,52 @@
-import React from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 function Navbar({ headerScrolled, menuOpen, setMenuOpen, activeSection, openSection, sections }) {
+  const collapseTimerRef = useRef(null);
+  const [brandExpanded, setBrandExpanded] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      if (collapseTimerRef.current) {
+        window.clearTimeout(collapseTimerRef.current);
+      }
+    };
+  }, []);
+
+  const clearCollapseTimer = () => {
+    if (collapseTimerRef.current) {
+      window.clearTimeout(collapseTimerRef.current);
+      collapseTimerRef.current = null;
+    }
+  };
+
+  const expandBrand = () => {
+    clearCollapseTimer();
+    setBrandExpanded(true);
+  };
+
+  const collapseBrandLater = () => {
+    clearCollapseTimer();
+    collapseTimerRef.current = window.setTimeout(() => {
+      setBrandExpanded(false);
+      collapseTimerRef.current = null;
+    }, 3000);
+  };
+
   return (
     <header className={`site-header ${headerScrolled ? 'is-scrolled' : ''}`}>
       <div className="container nav-inner">
-        <button className="brand" type="button" aria-label="Aaryesh Namdeo home" onClick={() => openSection('home')}>
+        <button
+          className={`brand ${brandExpanded ? 'is-expanded' : ''}`}
+          type="button"
+          aria-label="Aaryesh Namdeo home"
+          onClick={() => openSection('home')}
+          onPointerEnter={expandBrand}
+          onPointerLeave={collapseBrandLater}
+          onMouseEnter={expandBrand}
+          onMouseLeave={collapseBrandLater}
+          onFocus={expandBrand}
+          onBlur={collapseBrandLater}
+        >
           <span className="brand-slot" aria-hidden="true">
             <span className="logo logo-compact">AN.</span>
             <span className="logo logo-expanded">Aaryesh Namdeo</span>

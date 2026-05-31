@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
+import Resume from './components/Resume';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
@@ -20,6 +21,7 @@ const subtitleText = 'Engineering calm, practical systems for the web and AI.';
 const sections = [
   { id: 'home', label: 'Home' },
   { id: 'about', label: 'About' },
+  { id: 'resume', label: 'Resume' },
   { id: 'skills', label: 'Skills' },
   { id: 'projects', label: 'Projects' },
   { id: 'contact', label: 'Contact' },
@@ -71,7 +73,33 @@ function App() {
     }
 
     let frame = 0;
+    let lastTrailTime = 0;
+    let lastTrailX = window.innerWidth / 2;
+    let lastTrailY = window.innerHeight / 2;
     const target = { x: window.innerWidth / 2, y: window.innerHeight / 2, active: false };
+
+    const spawnLeafTrail = (x, y) => {
+      const leaf = document.createElement('span');
+      const drift = (Math.random() * 44 - 22).toFixed(2);
+      const fall = (108 + Math.random() * 68).toFixed(2);
+      const spin = (Math.random() * 180 - 90).toFixed(2);
+      const scale = (0.7 + Math.random() * 0.35).toFixed(2);
+      const startRotate = (Math.random() * 60 - 30).toFixed(2);
+
+      leaf.className = 'leaf-trail';
+      leaf.style.left = `${x}px`;
+      leaf.style.top = `${y}px`;
+      leaf.style.setProperty('--leaf-drift', `${drift}px`);
+      leaf.style.setProperty('--leaf-fall', `${fall}px`);
+      leaf.style.setProperty('--leaf-spin', `${spin}deg`);
+      leaf.style.setProperty('--leaf-scale', scale);
+      leaf.style.setProperty('--leaf-rotate', `${startRotate}deg`);
+      document.body.appendChild(leaf);
+
+      window.setTimeout(() => {
+        leaf.remove();
+      }, 1500);
+    };
 
     const update = () => {
       cursor.style.transform = `translate(${target.x}px, ${target.y}px) translate(-50%, -50%)`;
@@ -83,6 +111,16 @@ function App() {
       target.x = event.clientX;
       target.y = event.clientY;
       target.active = true;
+
+      const now = performance.now();
+      const distance = Math.hypot(target.x - lastTrailX, target.y - lastTrailY);
+      if (now - lastTrailTime > 130 && distance > 28) {
+        spawnLeafTrail(target.x, target.y);
+        lastTrailTime = now;
+        lastTrailX = target.x;
+        lastTrailY = target.y;
+      }
+
       if (!frame) {
         frame = window.requestAnimationFrame(update);
       }
@@ -142,6 +180,7 @@ function App() {
         <section className="content-shell" aria-label={`${activeSection} content`}>
           {activeSection === 'home' && <Hero typedSubtitle={typedSubtitle} openSection={openSection} />}
           {activeSection === 'about' && <About />}
+          {activeSection === 'resume' && <Resume />}
           {activeSection === 'skills' && <Skills />}
           {activeSection === 'projects' && <Projects openSection={openSection} />}
           {activeSection === 'contact' && <Contact activeSection={activeSection} onSubmit={onSubmit} />}
@@ -159,19 +198,19 @@ function App() {
         <div className="container footer-inner">
           <div className="footer-copyright">© 2026 Aaryesh Namdeo</div>
           <div className="footer-social" aria-label="Social links">
-            <a className="social-link" href="#" aria-label="GitHub">
+            <a className="social-link" href="https://github.com/iamaaryesh-n" aria-label="GitHub" target="_blank" rel="noreferrer">
               <SocialIcon type="github" />
               <span>GitHub</span>
             </a>
-            <a className="social-link" href="#" aria-label="Gmail">
+            <a className="social-link" href="mailto:aaryesh364@gmail.com" aria-label="Gmail">
               <SocialIcon type="mail" />
               <span>Gmail</span>
             </a>
-            <a className="social-link" href="#" aria-label="LinkedIn">
+            <a className="social-link" href="https://www.linkedin.com/in/aaryesh-namdeo-29294a1b4/" aria-label="LinkedIn" target="_blank" rel="noreferrer">
               <SocialIcon type="linkedin" />
               <span>LinkedIn</span>
             </a>
-            <a className="social-link" href="#" aria-label="Instagram">
+            <a className="social-link" href="https://www.instagram.com/iamaaryesh_n/" aria-label="Instagram" target="_blank" rel="noreferrer">
               <SocialIcon type="instagram" />
               <span>Instagram</span>
             </a>

@@ -42,9 +42,9 @@ function Hero({ openSection }) {
   return (
     <div className="container hero-grid content-panel panel-home">
       <div className="hero-copy">
-        <div className="hero-badge" aria-label="Available for Internships">
+        <div className="hero-badge" aria-label="Open to Internships & Collaborations">
           <span className="hero-badge-icon" aria-hidden="true">🌸</span>
-          <span>Available for Internships</span>
+          <span>Open to Internships &amp; Collaborations</span>
         </div>
         <h1 className="hero-title">
           <span className="hero-intro">Hi, I'm</span>
@@ -54,7 +54,7 @@ function Hero({ openSection }) {
           <span>{displayText}</span>
           <span className="typing-caret" aria-hidden="true" />
         </div>
-        <p className="hero-desc">I build scalable, intelligent, and user-focused web applications with clean code and thoughtful design. I turn ideas into impactful digital experiences.</p>
+        <p className="hero-desc">I’m a third-year Computer Science Engineering student passionate about building modern web applications and solving real-world problems through technology. My focus is on creating practical, scalable solutions while continuously expanding my knowledge of software development and intelligent systems.</p>
         <div className="cta-row">
           <button className="btn" type="button" onClick={() => openSection('projects')}>
             View Projects

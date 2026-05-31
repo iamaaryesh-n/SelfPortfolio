@@ -46,7 +46,7 @@
   background: transparent;
   padding: 0;
   white-space: nowrap;
-  width: clamp(3.75rem, 16vw, 12rem);
+  width: clamp(4.5rem, 18vw, 14rem);
   flex: none;
 }
 
@@ -60,7 +60,7 @@
 }
 
 .logo {
-  font-size: 1.08rem;
+  font-size: 1.5rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   font-family: 'DM Sans', sans-serif;
@@ -71,7 +71,7 @@
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  transition: opacity 0.3s ease, transform 0.3s ease, max-width 0.3s ease;
+  transition: opacity 1s ease, transform 1s ease;
 }
 
 .logo-compact {
@@ -81,23 +81,21 @@
 
 .logo-expanded {
   opacity: 0;
-  transform: translate(-10px, -50%);
-  font-size: 0.96rem;
-  letter-spacing: 0.11em;
+  transform: translate(-4px, -50%);
+  font-size: 1.24rem;
+  letter-spacing: 0.1em;
   width: 100%;
   overflow: hidden;
 }
 
-.brand:hover .logo-compact,
-.brand:focus-visible .logo-compact {
+.brand.is-expanded .logo-compact {
   opacity: 0;
   transform: translate(10px, -50%);
 }
 
-.brand:hover .logo-expanded,
-.brand:focus-visible .logo-expanded {
+.brand.is-expanded .logo-expanded {
   opacity: 1;
-  transform: translate(0, -50%);
+  transform: translate(-2px, -50%);
 }
 
 .nav-links {
@@ -231,7 +229,7 @@
 
 @media (max-width: 1080px) {
   .brand {
-    width: clamp(3.75rem, 18vw, 5.5rem);
+    width: clamp(4.5rem, 20vw, 7.5rem);
   }
 
   .logo-expanded {
@@ -265,6 +263,6 @@
   }
 
   .logo {
-    font-size: 1rem;
+    font-size: 1.5rem;
   }
 }

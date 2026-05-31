@@ -176,11 +176,11 @@ p {
   position: fixed;
   top: 0;
   left: 0;
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: var(--sakura-accent);
-  box-shadow: 0 0 0 6px rgba(212, 105, 122, 0.08);
+  box-shadow: 0 0 0 7px rgba(212, 105, 122, 0.08);
   pointer-events: none;
   transform: translate(-50%, -50%);
   z-index: 9999;
@@ -190,6 +190,55 @@ p {
 
 .custom-cursor.is-active {
   opacity: 0.95;
+}
+
+.leaf-trail {
+  position: fixed;
+  width: 9px;
+  height: 11px;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.7;
+  background: linear-gradient(145deg, rgba(232, 160, 168, 0.95), rgba(212, 105, 122, 0.92));
+  border-radius: 80% 0 80% 0;
+  transform: translate(-50%, -50%) rotate(var(--leaf-rotate)) scale(var(--leaf-scale));
+  transform-origin: center;
+  animation: leaf-drop 1.5s ease-out forwards;
+  will-change: transform, opacity;
+}
+
+.leaf-trail::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 18%;
+  width: 1px;
+  height: 66%;
+  background: rgba(255, 255, 255, 0.6);
+  transform: translateX(-50%) rotate(18deg);
+  opacity: 0.65;
+}
+
+@keyframes leaf-drop {
+  0% {
+    opacity: 0.72;
+    transform: translate(-50%, -50%) translate(0, 0) rotate(var(--leaf-rotate)) scale(var(--leaf-scale));
+  }
+
+  55% {
+    opacity: 0.55;
+  }
+
+  100% {
+    opacity: 0;
+    transform:
+      translate(-50%, -50%)
+      translate(var(--leaf-drift), var(--leaf-fall))
+      rotate(calc(var(--leaf-rotate) + var(--leaf-spin)))
+      scale(calc(var(--leaf-scale) * 0.82));
+  }
 }
 
 ::selection {
@@ -317,11 +366,11 @@ p {
   position: fixed;
   top: 0;
   left: 0;
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: var(--sakura-accent);
-  box-shadow: 0 0 0 6px rgba(212, 105, 122, 0.08);
+  box-shadow: 0 0 0 7px rgba(212, 105, 122, 0.08);
   pointer-events: none;
   transform: translate(-50%, -50%);
   z-index: 9999;
