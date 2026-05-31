@@ -1,26 +1,32 @@
+/* ── Grid ── */
 .project-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
+  gap: 14px;
+  align-items: stretch;
 }
 
+/* ── Card ── */
 .project-card {
-  border-radius: 26px;
+  border-radius: 20px;
   overflow: hidden;
   transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  box-shadow: var(--shadow-soft);
 }
 
 .project-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 18px 40px rgba(26, 18, 8, 0.1);
+  box-shadow: 0 28px 72px rgba(26, 18, 8, 0.16);
   border-color: rgba(212, 105, 122, 0.6);
 }
 
+/* ── Thumbnail ── */
 .project-thumb {
-  min-height: 220px;
-  padding: 22px;
+  min-height: 200px;
+  padding: 16px;
   background:
     linear-gradient(180deg, rgba(26, 18, 8, 0.08), rgba(26, 18, 8, 0.02)),
     linear-gradient(145deg, rgba(212, 105, 122, 0.12), rgba(255, 255, 255, 0.55));
@@ -34,9 +40,9 @@
 .project-thumb::after {
   content: '';
   position: absolute;
-  inset: 16px;
+  inset: 12px;
   border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: 18px;
+  border-radius: 14px;
 }
 
 .project-thumb.platform {
@@ -67,7 +73,7 @@
 
 .project-thumb-text {
   font-family: 'Shippori Mincho', serif;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   color: var(--ink);
   max-width: 10ch;
   line-height: 1.05;
@@ -75,52 +81,111 @@
 
 .project-thumb-badge {
   align-self: flex-start;
-  padding: 8px 14px;
+  padding: 6px 12px;
   border-radius: 999px;
   background: rgba(253, 250, 245, 0.84);
   border: 1px solid rgba(226, 213, 200, 0.9);
   color: var(--ink2);
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
+/* ── Card Body ── */
 .project-body {
-  padding: 24px;
-  display: grid;
-  gap: 14px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   flex: 1;
 }
 
 .project-title {
   font-family: 'Shippori Mincho', serif;
-  font-size: 1.45rem;
+  font-size: 1.25rem;
   line-height: 1.15;
-  margin: 0;
+  margin: 0 0 4px;
   color: var(--ink);
 }
 
+.project-subtitle {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--ink2);
+  letter-spacing: 0.03em;
+}
+
+/* ── Tech Stack Tags ── */
+.project-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.project-tag {
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(212, 105, 122, 0.08);
+  border: 1px solid rgba(212, 105, 122, 0.22);
+  color: var(--ink2);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+
+/* ── Description ── */
 .project-desc {
   color: var(--ink2);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ── Links ── */
+.project-links {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: auto;
 }
 
 .project-link {
-  margin-top: auto;
-  color: var(--ink);
-  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
   font-weight: 700;
-  position: relative;
-  width: fit-content;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+  cursor: pointer;
+}
+
+.project-link--live {
+  background: var(--ink, #1a1208);
+  color: var(--bg, #fdfaf5);
+  border: 1px solid transparent;
+}
+
+.project-link--live:hover,
+.project-link--live:focus-visible {
+  background: rgba(26, 18, 8, 0.82);
+}
+
+.project-link--github {
   background: transparent;
-  padding: 0;
-  text-align: left;
-}
-
-.project-link:hover,
-.project-link:focus-visible {
   color: var(--ink);
+  border: 1px solid rgba(26, 18, 8, 0.25);
 }
 
+.project-link--github:hover,
+.project-link--github:focus-visible {
+  background: rgba(26, 18, 8, 0.05);
+  border-color: rgba(26, 18, 8, 0.45);
+}
+
+/* ── Responsive ── */
 @media (max-width: 1080px) {
   .project-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -128,7 +193,11 @@
 }
 
 @media (max-width: 767px) {
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+
   .project-thumb {
-    min-height: 200px;
+    min-height: 180px;
   }
 }

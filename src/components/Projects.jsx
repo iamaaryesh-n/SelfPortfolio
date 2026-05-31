@@ -1,54 +1,116 @@
 import React from 'react';
+import '../styles/projects.css';
 
 const projects = [
   {
-    title: 'Startup Shopping Platform',
-    tag: 'E-commerce',
-    caption: 'A startup-first shopping system.',
-    description: 'A clean commerce experience focused on product discovery, structured browsing, and conversion-minded UI patterns.',
-    kind: 'platform',
-    linkLabel: 'View Project →',
+    id: 'vaultnotes',
+    thumbVariant: 'platform',
+    thumbLabel: 'Full Stack',
+    thumbText: 'Vault\nNotes',
+    title: 'VaultNotes',
+    subtitle: 'Realtime Collaboration Platform',
+    stack: ['React', 'Vite', 'Supabase', 'Zustand', 'Tailwind CSS', 'TipTap'],
+    description:
+      'A realtime collaboration platform with encrypted public/private Vaults, personal diaries, live chat, and social interactions — featuring optimistic UI, role-based access, and rich text editing.',
+    liveUrl: 'https://vaultnotes-seven.vercel.app',
+    githubUrl: 'https://github.com/iamaaryesh-n/vaultnotes',
   },
   {
-    title: 'Agentic AI System',
-    tag: 'Grok + Claude',
-    caption: 'Multi-model automation with intent.',
-    description: 'An agentic AI workflow built to orchestrate tasks, synthesize outputs, and support practical decision-making.',
-    kind: 'agentic',
-    linkLabel: 'View Project →',
+    id: 'focusforge',
+    thumbVariant: 'agentic',
+    thumbLabel: 'Extension',
+    thumbText: 'Focus\nForge',
+    title: 'FocusForge',
+    subtitle: 'Productivity Chrome Extension',
+    stack: ['JavaScript', 'Chrome Extension APIs', 'DOM Monitoring'],
+    description:
+      'A Chrome extension that filters distracting YouTube content in real time based on user-defined focus intent, using efficient DOM monitoring and lightweight filtering logic.',
+    liveUrl: null,
+    githubUrl: 'https://github.com/iamaaryesh-n/focusforge',
   },
   {
-    title: 'Coming Soon',
-    tag: 'Next Build',
-    caption: 'A reserved space for the next refined system.',
-    description: 'A future project slot for the next interface, platform, or AI tool built with the same quality bar.',
-    kind: 'soon',
-    linkLabel: 'Discuss It →',
+    id: 'smartcampus',
+    thumbVariant: 'platform',
+    thumbLabel: 'Full Stack',
+    thumbText: 'Smart\nCampus',
+    title: 'Smart Campus',
+    subtitle: 'Timetable Management System',
+    stack: ['Python', 'Flask', 'SQLite', 'pdfplumber', 'HTML/CSS/JS'],
+    description:
+      'A full-stack timetable system automating PDF timetable parsing via regex extraction into structured DB records, with REST APIs and a responsive frontend for students and faculty.',
+    liveUrl: null,
+    githubUrl: 'https://github.com/iamaaryesh-n/SmartCampus',
   },
 ];
 
-function Projects({ openSection }) {
+function ProjectCard({ project }) {
+  return (
+    <article className="project-card">
+      <div className={`project-thumb ${project.thumbVariant}`}>
+        <span className="project-thumb-text">
+          {project.thumbText.split('\n').map((line, i) => (
+            <React.Fragment key={i}>
+              {i > 0 && <br />}
+              {line}
+            </React.Fragment>
+          ))}
+        </span>
+        <span className="project-thumb-badge">{project.thumbLabel}</span>
+      </div>
+
+      <div className="project-body">
+        <div>
+          <h3 className="project-title">{project.title}</h3>
+          <p className="project-subtitle">{project.subtitle}</p>
+        </div>
+
+        <div className="project-stack">
+          {project.stack.map((tech) => (
+            <span key={tech} className="project-tag">{tech}</span>
+          ))}
+        </div>
+
+        <p className="project-desc">{project.description}</p>
+
+        <div className="project-links">
+          {project.liveUrl && (
+            <a
+              className="btn project-link project-link--live"
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Live Demo ↗
+            </a>
+          )}
+          <a
+            className="btn project-link project-link--github"
+            href={project.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub ↗
+          </a>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function Projects() {
   return (
     <div className="container content-panel panel-detail panel-projects">
-      <div className="section-header">
-        <div className="eyebrow">Projects</div>
-        <h2>Work shaped to feel deliberate, useful, and production-ready.</h2>
+      <div className="section-header projects-section-title">
+        <h2>Projects</h2>
+        <p>
+          A selection of things I've built — from realtime platforms to browser
+          tools and campus systems.
+        </p>
       </div>
+
       <div className="project-grid">
         {projects.map((project) => (
-          <article className="project-card" key={project.title}>
-            <div className={`project-thumb ${project.kind}`}>
-              <div className="project-thumb-text">{project.caption}</div>
-              <div className="project-thumb-badge">{project.tag}</div>
-            </div>
-            <div className="project-body">
-              <h3 className="project-title">{project.title}</h3>
-              <p className="project-desc">{project.description}</p>
-              <button className="project-link" type="button" onClick={() => openSection('contact')}>
-                {project.linkLabel}
-              </button>
-            </div>
-          </article>
+          <ProjectCard key={project.id} project={project} />
         ))}
       </div>
     </div>

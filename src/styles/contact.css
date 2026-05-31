@@ -11,6 +11,29 @@
   margin: 0 auto;
 }
 
+/* container positioning so decorative shapes sit behind panels */
+.panel-contact {
+  position: relative;
+}
+
+/* Decorative floating shapes behind contact panels */
+.contact-decor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.contact-decor .shape {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.12;
+  filter: blur(14px);
+  mix-blend-mode: multiply;
+}
+.contact-decor .s1 { width: 220px; height: 220px; left: 6%; top: 8%; background: radial-gradient(circle at 30% 30%, rgba(212,105,122,0.18), rgba(255,255,255,0)); animation: float 9s ease-in-out infinite; }
+.contact-decor .s2 { width: 160px; height: 160px; right: 8%; top: 20%; background: radial-gradient(circle at 30% 30%, rgba(255,200,180,0.14), rgba(255,255,255,0)); animation: float 11s ease-in-out infinite; animation-delay: 1.2s; }
+.contact-decor .s3 { width: 120px; height: 120px; right: 22%; bottom: 6%; background: radial-gradient(circle at 30% 30%, rgba(212,105,122,0.12), rgba(255,255,255,0)); animation: float 8s ease-in-out infinite; animation-delay: 0.6s; }
+
 .contact-section-title {
   max-width: 760px;
   margin: 0 auto 26px;
@@ -32,6 +55,9 @@
   padding: 22px 22px 20px;
   background: rgba(255, 255, 255, 0.72);
   border-radius: 6px;
+  position: relative;
+  z-index: 3;
+  box-shadow: var(--shadow-soft);
 }
 
 .contact-stack {
@@ -98,7 +124,8 @@
 .contact-map {
   margin-top: 2px;
   border-radius: 6px;
-  overflow: hidden;
+  /* allow map controls/popups to escape rounded container */
+  overflow: visible;
   border: 1px solid rgba(226, 213, 200, 0.78);
   box-shadow: 0 12px 28px rgba(26, 18, 8, 0.06);
   background: rgba(255, 255, 255, 0.84);
@@ -108,7 +135,10 @@
 .contact-map .leaflet-container {
   display: block;
   width: 100%;
-  height: 190px;
+  height: 220px; /* slightly larger default for better visibility */
+  min-height: 160px;
+  position: relative;
+  z-index: 2;
 }
 
 /* ── FORM PANEL ── */
@@ -122,6 +152,7 @@
 .php-email-form {
   background: rgba(255, 255, 255, 0.72);
   border-radius: 6px;
+  box-shadow: var(--shadow-soft);
 }
 
 .contact-form {
@@ -223,6 +254,40 @@
 
 .form-feedback--error svg {
   stroke: #b91c1c;
+}
+
+/* Entrance animations for info cards and form fields */
+.info-wrap, .contact-form-panel {
+  position: relative;
+  z-index: 3;
+}
+
+.contact-stack > * {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: fadeUp 0.36s cubic-bezier(.2,.9,.2,1) both;
+}
+.contact-stack > *:nth-child(1) { animation-delay: 0.08s; }
+.contact-stack > *:nth-child(2) { animation-delay: 0.12s; }
+.contact-stack > *:nth-child(3) { animation-delay: 0.16s; }
+.contact-stack > *:nth-child(4) { animation-delay: 0.2s; }
+
+.contact-form { opacity: 0; transform: translateY(6px); animation: fadeUp 0.36s cubic-bezier(.2,.9,.2,1) both; animation-delay: 0.2s; }
+.contact-form .form-grid .field { opacity: 0; transform: translateY(6px); animation: fadeUp 0.28s cubic-bezier(.2,.9,.2,1) both; }
+.contact-form .form-grid .field:nth-child(1) { animation-delay: 0.24s; }
+.contact-form .form-grid .field:nth-child(2) { animation-delay: 0.28s; }
+.contact-form .form-grid .field:nth-child(3) { animation-delay: 0.32s; }
+.contact-form .form-grid .field:nth-child(4) { animation-delay: 0.36s; }
+
+@keyframes float {
+  0% { transform: translate3d(0,0,0); }
+  50% { transform: translate3d(6px,-18px,0); }
+  100% { transform: translate3d(0,0,0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ── SUBMIT BUTTON ── */

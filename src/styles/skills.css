@@ -14,17 +14,17 @@
 .skills-grid-cards {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
-  margin-top: 34px;
+  gap: 14px;
+  margin-top: 30px;
 }
 
 .skill-category-card {
   position: relative;
-  border-radius: 20px;
+  border-radius: 18px;
   border: 1px solid rgba(226, 213, 200, 0.92);
   background: rgba(255, 255, 255, 0.62);
   box-shadow: var(--shadow-soft);
-  padding: 22px 20px 20px;
+  padding: 18px 16px 16px;
   transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, background-color 0.22s ease;
 }
 
@@ -66,8 +66,8 @@
 }
 
 .skill-category-icon {
-  width: 46px;
-  height: 46px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -77,18 +77,18 @@
 }
 
 .skill-category-icon svg {
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
   fill: none;
   stroke: currentColor;
-  stroke-width: 1.8;
+  stroke-width: 1.6;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
 .skill-category-card h3 {
   margin: 0;
-  font-size: 1.02rem;
+  font-size: 0.98rem;
   color: var(--ink);
   letter-spacing: 0.01em;
 }
@@ -105,8 +105,8 @@
   position: relative;
   padding-left: 14px;
   color: var(--ink2);
-  font-size: 0.92rem;
-  line-height: 1.5;
+  font-size: 0.88rem;
+  line-height: 1.45;
 }
 
 .skill-points li::before {

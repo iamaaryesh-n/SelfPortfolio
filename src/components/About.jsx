@@ -1,4 +1,5 @@
 import React from 'react';
+import Self from '../assets/Self.png';
 
 function About() {
   return (
@@ -13,7 +14,7 @@ function About() {
             <div className="about-portrait">
               <img
                 className="about-photo"
-                src="/about-photo.jpg"
+                src={Self}
                 alt="Aaryesh Namdeo"
                 onError={(event) => {
                   event.currentTarget.style.display = 'none';
@@ -23,7 +24,7 @@ function About() {
               />
               <div className="about-photo-fallback">
                 <div className="about-photo-monogram">AN</div>
-                <div className="about-photo-note">Drop your photograph in <span>public/about-photo.jpg</span></div>
+                <div className="about-photo-note">Drop your photograph in <span>public/about-photo.jpg</span> or <span>uploads/about-photo.jpg</span></div>
               </div>
             </div>
           </div>

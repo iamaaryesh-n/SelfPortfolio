@@ -122,6 +122,13 @@ function Contact({ activeSection }) {
 
       <div className="contact-layout">
 
+        {/* Decorative floating shapes for subtle animation */}
+        <div className="contact-decor" aria-hidden="true">
+          <span className="shape s1" />
+          <span className="shape s2" />
+          <span className="shape s3" />
+        </div>
+
         {/* ── LEFT: Info + Map ── */}
         <aside className="contact-panel info-wrap">
           <div className="contact-stack">

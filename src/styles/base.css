@@ -172,6 +172,46 @@ p {
   transform: translateY(0);
 }
 
+/* Global decorative shapes used across pages */
+.page-decor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.page-decor .shape {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.08;
+  filter: blur(16px);
+  mix-blend-mode: multiply;
+}
+.page-decor .s1 { width: 240px; height: 240px; left: 4%; top: 6%; background: radial-gradient(circle at 30% 30%, rgba(212,105,122,0.18), rgba(255,255,255,0)); animation: float 10s ease-in-out infinite; }
+.page-decor .s2 { width: 180px; height: 180px; right: 6%; top: 18%; background: radial-gradient(circle at 30% 30%, rgba(255,200,180,0.14), rgba(255,255,255,0)); animation: float 12s ease-in-out infinite; animation-delay: 1.2s; }
+.page-decor .s3 { width: 140px; height: 140px; right: 22%; bottom: 6%; background: radial-gradient(circle at 30% 30%, rgba(212,105,122,0.12), rgba(255,255,255,0)); animation: float 8s ease-in-out infinite; animation-delay: 0.6s; }
+
+/* Apply a gentle fade-up to content-panel children so each page animates on load */
+.content-panel > * {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: fadeUp 0.36s cubic-bezier(.2,.9,.2,1) both;
+}
+.content-panel > *:nth-child(1) { animation-delay: 0.04s; }
+.content-panel > *:nth-child(2) { animation-delay: 0.08s; }
+.content-panel > *:nth-child(3) { animation-delay: 0.12s; }
+.content-panel > *:nth-child(4) { animation-delay: 0.16s; }
+
+@keyframes float {
+  0% { transform: translate3d(0,0,0); }
+  50% { transform: translate3d(6px,-18px,0); }
+  100% { transform: translate3d(0,0,0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .custom-cursor {
   position: fixed;
   top: 0;

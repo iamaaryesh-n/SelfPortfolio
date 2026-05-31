@@ -1,8 +1,10 @@
 .site-footer {
   margin-top: auto;
   padding: 10px 0 10px;
-  border-top: 1px solid rgba(226, 213, 200, 0.85);
+  border-top: 1px solid rgba(226, 213, 200, 0.9);
   background: rgba(253, 250, 245, 0.72);
+  /* subtle shadow above footer to lift it slightly from content */
+  box-shadow: 0 -8px 28px rgba(26, 18, 8, 0.04);
 }
 
 .footer-inner {

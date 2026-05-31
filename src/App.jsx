@@ -55,7 +55,17 @@ function useTypewriter(text, enabled) {
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [headerScrolled, setHeaderScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+  const getInitialSection = () => {
+    try {
+      const hash = window.location.hash.replace('#', '');
+      const valid = ['home', 'about', 'resume', 'skills', 'projects', 'contact'];
+      return valid.includes(hash) ? hash : 'home';
+    } catch (e) {
+      return 'home';
+    }
+  };
+
+  const [activeSection, setActiveSection] = useState(getInitialSection);
   const cursorRef = useRef(null);
   const typedSubtitle = useTypewriter(subtitleText, activeSection === 'home');
 
@@ -65,6 +75,57 @@ function App() {
     onScroll();
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  // Apply staggered reveal animations to all elements inside the current
+  // content panel when the active section changes — exclude the home
+  // `portrait-image` so the artwork does not animate.
+  useEffect(() => {
+    // small delay so the DOM for the new section has rendered
+    const timer = setTimeout(() => {
+      try {
+        const panel = document.querySelector('.content-panel');
+        if (!panel) return;
+
+        // collect visible elements inside the panel, excluding the portrait image
+        const all = Array.from(panel.querySelectorAll('*'))
+          .filter((el) => {
+            if (!(el instanceof HTMLElement)) return false;
+            if (el.classList.contains('portrait-image')) return false;
+            // don't animate the Leaflet map or anything inside the map container
+            if (el.id === 'leaflet-map') return false;
+            if (el.closest && el.closest('.contact-map')) return false;
+            // also avoid animating ancestors of the map (they can contain transforms that break Leaflet)
+            try {
+              if (el.querySelector && el.querySelector('#leaflet-map')) return false;
+            } catch (e) {
+              // ignore
+            }
+            // skip global decor or shapes
+            if (el.closest && el.closest('.page-decor')) return false;
+            // skip elements with no layout size
+            const rect = el.getBoundingClientRect();
+            if (rect.width === 0 && rect.height === 0) return false;
+            return true;
+          });
+
+        let delay = 20; // start small
+        for (const el of all) {
+          // reset any previous inline animation so it restarts
+          el.style.animation = 'none';
+          el.style.opacity = '0';
+          el.style.transform = 'translateY(10px)';
+          // apply staggered fadeUp animation (defined in CSS)
+          el.style.animation = `fadeUp 0.32s cubic-bezier(.2,.9,.2,1) both`;
+          el.style.animationDelay = `${delay}ms`;
+          delay += 20; // stagger step
+        }
+      } catch (e) {
+        // ignore
+      }
+    }, 60);
+
+    return () => clearTimeout(timer);
+  }, [activeSection]);
 
   useEffect(() => {
     const cursor = cursorRef.current;
@@ -114,8 +175,15 @@ function App() {
 
       const now = performance.now();
       const distance = Math.hypot(target.x - lastTrailX, target.y - lastTrailY);
-      if (now - lastTrailTime > 130 && distance > 28) {
+      // Increase density: allow more frequent spawns and on smaller movements.
+      if (now - lastTrailTime > 80 && distance > 18) {
         spawnLeafTrail(target.x, target.y);
+        // occasionally spawn an extra leaf nearby for a denser effect
+        if (Math.random() < 0.35) {
+          const ox = (Math.random() * 24) - 12;
+          const oy = (Math.random() * 24) - 12;
+          spawnLeafTrail(target.x + ox, target.y + oy);
+        }
         lastTrailTime = now;
         lastTrailX = target.x;
         lastTrailY = target.y;
@@ -178,6 +246,12 @@ function App() {
 
       <main className="app-main">
         <section className="content-shell" aria-label={`${activeSection} content`}>
+          {/* Global decorative shapes (appear behind all pages) */}
+          <div className="page-decor" aria-hidden="true">
+            <span className="shape s1" />
+            <span className="shape s2" />
+            <span className="shape s3" />
+          </div>
           {activeSection === 'home' && <Hero typedSubtitle={typedSubtitle} openSection={openSection} />}
           {activeSection === 'about' && <About />}
           {activeSection === 'resume' && <Resume />}
