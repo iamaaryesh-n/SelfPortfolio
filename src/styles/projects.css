@@ -14,14 +14,14 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: rgba(255, 252, 247, 0.82);
+  background: rgba(255, 254, 251, 0.94);
   border: 1px solid rgba(26, 18, 8, 0.08);
   box-shadow: var(--shadow-soft);
 }
 
 .project-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 20px 48px rgba(26, 18, 8, 0.14);
+  box-shadow: 0 20px 48px rgba(26, 18, 8, 0.247);
   border-color: rgba(212, 105, 122, 0.22);
 }
 
@@ -111,6 +111,7 @@
   flex-direction: column;
   gap: 10px;
   flex: 1;
+  background: rgba(255, 255, 255, 0.34);
 }
 
 .project-title {

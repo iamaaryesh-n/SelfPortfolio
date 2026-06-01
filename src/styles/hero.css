@@ -373,7 +373,7 @@
   .portrait-image {
     max-height: 320px;
     max-width: 112%;
-    transform: none;
+    transform: translateX(-3%);
     object-position: center top;
   }
 
