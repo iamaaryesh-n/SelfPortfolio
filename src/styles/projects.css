@@ -14,13 +14,15 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  background: rgba(255, 252, 247, 0.82);
+  border: 1px solid rgba(26, 18, 8, 0.08);
   box-shadow: var(--shadow-soft);
 }
 
 .project-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 28px 72px rgba(26, 18, 8, 0.16);
-  border-color: rgba(212, 105, 122, 0.6);
+  box-shadow: 0 20px 48px rgba(26, 18, 8, 0.14);
+  border-color: rgba(212, 105, 122, 0.22);
 }
 
 /* ── Thumbnail ── */
@@ -69,6 +71,17 @@
 .project-thumb-badge {
   position: relative;
   z-index: 1;
+}
+
+/* Thumbnail image (covers inner area, text/badge sit above) */
+.project-thumb-image {
+  position: absolute;
+  inset: 12px;
+  width: calc(100% - 24px);
+  height: calc(100% - 24px);
+  object-fit: cover;
+  border-radius: 14px;
+  z-index: 0;
 }
 
 .project-thumb-text {

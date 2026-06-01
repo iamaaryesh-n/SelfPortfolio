@@ -1,13 +1,17 @@
 import React from 'react';
 import '../styles/projects.css';
+import vaultnotesImg from '../assets/vaultnotes.png';
+import infocampusImg from '../assets/infocampus.png';
 
 const projects = [
   {
     id: 'vaultnotes',
     thumbVariant: 'platform',
     thumbLabel: 'Full Stack',
+    showBadge: false,
     thumbText: 'Vault\nNotes',
     title: 'VaultNotes',
+    imageUrl: vaultnotesImg,
     subtitle: 'Realtime Collaboration Platform',
     stack: ['React', 'Vite', 'Supabase', 'Zustand', 'Tailwind CSS', 'TipTap'],
     description:
@@ -32,8 +36,10 @@ const projects = [
     id: 'smartcampus',
     thumbVariant: 'platform',
     thumbLabel: 'Full Stack',
+    showBadge: false,
     thumbText: 'Smart\nCampus',
     title: 'Smart Campus',
+    imageUrl: infocampusImg,
     subtitle: 'Timetable Management System',
     stack: ['Python', 'Flask', 'SQLite', 'pdfplumber', 'HTML/CSS/JS'],
     description:
@@ -47,15 +53,25 @@ function ProjectCard({ project }) {
   return (
     <article className="project-card">
       <div className={`project-thumb ${project.thumbVariant}`}>
-        <span className="project-thumb-text">
-          {project.thumbText.split('\n').map((line, i) => (
-            <React.Fragment key={i}>
-              {i > 0 && <br />}
-              {line}
-            </React.Fragment>
-          ))}
-        </span>
-        <span className="project-thumb-badge">{project.thumbLabel}</span>
+        {project.imageUrl ? (
+          <img
+            className="project-thumb-image"
+            src={project.imageUrl}
+            alt={`${project.title} screenshot`}
+          />
+        ) : (
+          <span className="project-thumb-text">
+            {project.thumbText.split('\n').map((line, i) => (
+              <React.Fragment key={i}>
+                {i > 0 && <br />}
+                {line}
+              </React.Fragment>
+            ))}
+          </span>
+        )}
+        {project.thumbLabel && project.showBadge !== false && (
+          <span className="project-thumb-badge">{project.thumbLabel}</span>
+        )}
       </div>
 
       <div className="project-body">
