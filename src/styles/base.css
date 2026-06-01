@@ -76,6 +76,11 @@ label {
   .custom-cursor {
     display: none;
   }
+
+  .leaf-trail {
+    width: 11px;
+    height: 13px;
+  }
 }
 
 img {

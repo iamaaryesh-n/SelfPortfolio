@@ -32,6 +32,15 @@ function Navbar({ headerScrolled, menuOpen, setMenuOpen, activeSection, openSect
     }, 3000);
   };
 
+  const handleBrandClick = () => {
+    if (window.matchMedia('(max-width: 767px)').matches) {
+      setBrandExpanded((value) => !value);
+      return;
+    }
+
+    openSection('home');
+  };
+
   return (
     <header className={`site-header ${headerScrolled ? 'is-scrolled' : ''}`}>
       <div className="container nav-inner">
@@ -39,7 +48,7 @@ function Navbar({ headerScrolled, menuOpen, setMenuOpen, activeSection, openSect
           className={`brand ${brandExpanded ? 'is-expanded' : ''}`}
           type="button"
           aria-label="Aaryesh Namdeo home"
-          onClick={() => openSection('home')}
+          onClick={handleBrandClick}
           onPointerEnter={expandBrand}
           onPointerLeave={collapseBrandLater}
           onMouseEnter={expandBrand}

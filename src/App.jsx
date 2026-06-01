@@ -58,6 +58,17 @@ function App() {
   const [headerScrolled, setHeaderScrolled] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
   const handleLoaderDone = useCallback(() => setShowLoader(false), []);
+  const isInsideLeafletMap = (target) => {
+    if (!(target instanceof Element)) return false;
+    return Boolean(target.closest('#leaflet-map'));
+  };
+
+  const isTouchPointInsideLeafletMap = (touch) => {
+    if (!touch) return false;
+    const target = document.elementFromPoint(touch.clientX, touch.clientY);
+    return isInsideLeafletMap(target);
+  };
+
   const getInitialSection = () => {
     try {
       const hash = window.location.hash.replace('#', '');
@@ -124,17 +135,6 @@ function App() {
         window.clearTimeout(state.navCooldownTimer);
         state.navCooldownTimer = null;
       }
-    };
-
-    const isInsideLeafletMap = (target) => {
-      if (!(target instanceof Element)) return false;
-      return Boolean(target.closest('#leaflet-map'));
-    };
-
-    const isTouchPointInsideLeafletMap = (touch) => {
-      if (!touch) return false;
-      const target = document.elementFromPoint(touch.clientX, touch.clientY);
-      return isInsideLeafletMap(target);
     };
 
     const getNextSection = (direction) => {
@@ -406,6 +406,9 @@ function App() {
     let lastTrailTime = 0;
     let lastTrailX = window.innerWidth / 2;
     let lastTrailY = window.innerHeight / 2;
+    let lastTouchTrailTime = 0;
+    let lastTouchTrailX = window.innerWidth / 2;
+    let lastTouchTrailY = window.innerHeight / 2;
     const target = { x: window.innerWidth / 2, y: window.innerHeight / 2, active: false };
 
     const spawnLeafTrail = (x, y) => {
@@ -468,12 +471,40 @@ function App() {
       cursor.classList.remove('is-active');
     };
 
+    const onTouchTrail = (event) => {
+      if (event.touches.length !== 1) return;
+
+      const touch = event.touches[0];
+      if (!touch) return;
+
+      const target = document.elementFromPoint(touch.clientX, touch.clientY);
+      if (target instanceof Element && target.closest('#leaflet-map')) return;
+
+      const now = performance.now();
+      const distance = Math.hypot(touch.clientX - lastTouchTrailX, touch.clientY - lastTouchTrailY);
+
+      if (now - lastTouchTrailTime > 48 && distance > 10) {
+        spawnLeafTrail(touch.clientX, touch.clientY);
+        if (Math.random() < 0.55) {
+          const ox = (Math.random() * 24) - 12;
+          const oy = (Math.random() * 24) - 12;
+          spawnLeafTrail(touch.clientX + ox, touch.clientY + oy);
+        }
+
+        lastTouchTrailTime = now;
+        lastTouchTrailX = touch.clientX;
+        lastTouchTrailY = touch.clientY;
+      }
+    };
+
     document.addEventListener('pointermove', onMove);
     document.addEventListener('pointerleave', onLeave);
+    document.addEventListener('touchmove', onTouchTrail, { passive: true });
 
     return () => {
       document.removeEventListener('pointermove', onMove);
       document.removeEventListener('pointerleave', onLeave);
+      document.removeEventListener('touchmove', onTouchTrail);
       if (frame) {
         window.cancelAnimationFrame(frame);
       }

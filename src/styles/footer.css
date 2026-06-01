@@ -66,6 +66,12 @@
   display: inline-block;
 }
 
+@media (min-width: 768px) {
+  .site-footer {
+    margin-top: 0;
+  }
+}
+
 @media (max-width: 1080px) {
   .site-footer {
     padding: 10px 0 10px;

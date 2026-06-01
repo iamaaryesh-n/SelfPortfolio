@@ -272,7 +272,7 @@
   width: 100%;
   min-height: 0;
   min-width: 0;
-  max-height: calc(100dvh - var(--header-h) - 56px);
+  max-height: calc(100dvh - var(--header-h) - 44px);
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
@@ -371,8 +371,8 @@
   }
 
   .portrait-image {
-    max-height: 280px;
-    max-width: 85%;
+    max-height: 320px;
+    max-width: 112%;
     transform: none;
     object-position: center top;
   }
