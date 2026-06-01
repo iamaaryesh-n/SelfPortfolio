@@ -108,6 +108,11 @@
     font-size: 0;
   }
 
+  .social-link svg {
+    width: 22px;
+    height: 22px;
+  }
+
   .footer-social {
     gap: 10px 14px;
   }

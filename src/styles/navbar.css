@@ -349,7 +349,7 @@
     left: 50%;
     width: min(calc(100vw - 24px), 360px);
     padding: 12px;
-    background: linear-gradient(180deg, rgba(253, 250, 245, 0.98), rgba(250, 244, 236, 0.98));
+    background: rgba(253, 250, 245, 0.96);
     border: 1px solid rgba(226, 213, 200, 0.96);
     border-radius: 22px;
     box-shadow: 0 22px 44px rgba(26, 18, 8, 0.14);
