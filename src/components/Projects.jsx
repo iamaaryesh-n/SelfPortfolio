@@ -16,7 +16,7 @@ const projects = [
     stack: ['React', 'Vite', 'Supabase', 'Zustand', 'Tailwind CSS', 'TipTap'],
     description:
       'A realtime collaboration platform with encrypted public/private Vaults, personal diaries, live chat, and social interactions — featuring optimistic UI, role-based access, and rich text editing.',
-    liveUrl: 'https://vaultnotes-seven.vercel.app',
+    liveUrl: 'https://landingvaultnotes.vercel.app',
     githubUrl: 'https://github.com/iamaaryesh-n/vaultnotes',
   },
   {
